@@ -12,6 +12,7 @@ import re
 import tempfile
 from collections import Counter
 from datetime import datetime
+from pathlib import Path
 
 from flask import Flask, render_template, request
 
@@ -194,7 +195,7 @@ def screenshot(
             viewport={"width": width, "height": 800},
             device_scale_factor=2,
         )
-        page.goto(f"file:///{html_path.replace(os.sep, '/')}", wait_until="networkidle")
+        page.goto(Path(html_path).absolute().as_uri(), wait_until="networkidle")
         page.screenshot(path=png_path, full_page=full_page)
         browser.close()
 
