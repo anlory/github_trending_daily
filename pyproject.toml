@@ -1,0 +1,17 @@
+[project]
+name = "github-trending-daily"
+version = "0.1.0"
+description = "GitHub Trending daily viewer with mobile-friendly web UI"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "flask>=3.1.3",
+    "openai>=1.70.0",
+    "playwright>=1.51.0",
+    "requests>=2.33.0",
+    "socksio>=1.0.0",
+]
+
+[project.scripts]
+github-trending = "app:main"
