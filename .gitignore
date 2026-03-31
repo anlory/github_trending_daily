@@ -9,6 +9,9 @@ wheels/
 # Virtual environments
 .venv
 
+# Generated exports
+output/
+
 # Claude Code
 .claude/
 .omc/
