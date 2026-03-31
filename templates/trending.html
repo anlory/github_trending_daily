@@ -75,15 +75,6 @@
     z-index: 0;
   }
 
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
   .repo-card {
     opacity: 0;
     transform: translateY(18px);
@@ -193,90 +184,6 @@
       </div>
     </div>
   </header>
-
-  <section class="mb-4 space-y-3 sm:mb-5">
-    <div class="rounded-[24px] border border-white/10 bg-ink-850/70 p-3 shadow-soft backdrop-blur">
-      <div class="mb-2 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">时间范围</div>
-      <div class="hide-scrollbar flex gap-2 overflow-x-auto px-1 pb-1">
-        {% for s in since_options %}
-        <a
-          href="?since={{ s.value }}{% if language %}&amp;language={{ language }}{% endif %}&amp;desc_lang={{ desc_lang }}"
-          class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border px-4 py-2 text-sm font-medium transition {% if s.value == since %}border-accent-blue bg-accent-blue text-white shadow-[0_10px_24px_rgba(88,166,255,0.28)]{% else %}border-white/10 bg-white/[0.04] text-ink-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-ink-200{% endif %}"
-          aria-label="{{ s.label }} 趋势"
-        >
-          {{ s.label }}
-        </a>
-        {% endfor %}
-
-        {% if language %}
-        <a
-          href="?since={{ since }}&amp;desc_lang={{ desc_lang }}"
-          class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-accent-red/35 bg-accent-red/10 px-4 py-2 text-sm font-medium text-accent-red transition hover:border-accent-red/55 hover:bg-accent-red/15"
-        >
-          <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/></svg>
-          清除 {{ language }}
-        </a>
-        {% endif %}
-      </div>
-    </div>
-
-    {% if top_languages %}
-    <div class="rounded-[24px] border border-white/10 bg-ink-850/70 p-3 shadow-soft backdrop-blur">
-      <div class="mb-2 flex items-center justify-between gap-3 px-1">
-        <div class="text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">热门语言</div>
-        <div class="text-[11px] text-ink-400">横向滑动查看更多</div>
-      </div>
-      <div class="hide-scrollbar flex gap-2 overflow-x-auto px-1 pb-1">
-        <a
-          href="?since={{ since }}&amp;desc_lang={{ desc_lang }}"
-          class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full border px-3.5 py-2 text-sm font-medium transition {% if not language %}border-accent-blue bg-accent-blue text-white shadow-[0_10px_24px_rgba(88,166,255,0.28)]{% else %}border-white/10 bg-white/[0.04] text-ink-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-ink-200{% endif %}"
-        >
-          All
-        </a>
-        {% for lang in top_languages %}
-        <a
-          href="?since={{ since }}&amp;language={{ lang.name }}&amp;desc_lang={{ desc_lang }}"
-          class="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition {% if language == lang.name %}border-accent-blue bg-accent-blue text-white shadow-[0_10px_24px_rgba(88,166,255,0.28)]{% else %}border-white/10 bg-white/[0.04] text-ink-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-ink-200{% endif %}"
-        >
-          <span class="h-2.5 w-2.5 rounded-full" style="background:{{ lang.color }}"></span>
-          {{ lang.name }}
-        </a>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-  </section>
-
-  <section class="mb-5 grid gap-3 sm:grid-cols-3">
-    <div class="rounded-[24px] border border-white/10 bg-ink-850/70 p-4 shadow-soft backdrop-blur">
-      <div class="text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">仓库数量</div>
-      <div class="mt-2 text-2xl font-bold text-accent-blue">{{ repos|length }}</div>
-      <p class="mt-1 text-sm text-ink-400">当前筛选条件下的热门项目总数</p>
-    </div>
-
-    <div class="rounded-[24px] border border-white/10 bg-ink-850/70 p-4 shadow-soft backdrop-blur">
-      <div class="text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">描述语言</div>
-      <div class="mt-2 flex items-center justify-between gap-3">
-        <div>
-          <div class="text-base font-semibold text-ink-200">{{ '中文' if desc_lang == 'zh' else 'English' }}</div>
-          <p class="mt-1 text-sm text-ink-400">一键切换说明文案语言</p>
-        </div>
-        <a
-          href="?since={{ since }}{% if language %}&amp;language={{ language }}{% endif %}&amp;desc_lang={{ 'en' if desc_lang == 'zh' else 'zh' }}"
-          class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-ink-200 transition hover:border-white/20 hover:bg-white/[0.1]"
-          title="切换描述语言"
-        >
-          {{ '切换 EN' if desc_lang == 'zh' else '切换中文' }}
-        </a>
-      </div>
-    </div>
-
-    <div class="rounded-[24px] border border-white/10 bg-ink-850/70 p-4 shadow-soft backdrop-blur">
-      <div class="text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">浏览体验</div>
-      <div class="mt-2 text-base font-semibold text-ink-200">更适合单手滑动</div>
-      <p class="mt-1 text-sm text-ink-400">卡片更紧凑，按钮更大，移动端横向过滤更顺手。</p>
-    </div>
-  </section>
 
   {% if repos %}
   <section class="space-y-4">
