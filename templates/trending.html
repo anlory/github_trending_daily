@@ -7,757 +7,375 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['DM Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          heading: ['Space Grotesk', 'DM Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        },
+        colors: {
+          ink: {
+            950: '#070b11',
+            900: '#0a0e14',
+            850: '#101621',
+            800: '#161c25',
+            780: '#1a2230',
+            700: '#252d3a',
+            600: '#3a4556',
+            400: '#8b99ad',
+            300: '#b8c4d4',
+            200: '#e2e8f0',
+          },
+          accent: {
+            blue: '#58a6ff',
+            cyan: '#39d2c0',
+            purple: '#bc8cff',
+            green: '#3fb950',
+            orange: '#d29922',
+            red: '#f85149',
+          },
+        },
+        boxShadow: {
+          glow: '0 12px 40px rgba(0, 0, 0, 0.38)',
+          soft: '0 6px 20px rgba(0, 0, 0, 0.24)',
+        },
+      },
+    },
+  };
+</script>
 <style>
-  :root {
-    --bg-primary: #0a0e14;
-    --bg-secondary: #12171e;
-    --bg-card: #161c25;
-    --bg-card-hover: #1a2230;
-    --border: #252d3a;
-    --border-hover: #3a4556;
-    --text-primary: #e2e8f0;
-    --text-secondary: #8b99ad;
-    --text-muted: #5c6a7e;
-    --accent-blue: #58a6ff;
-    --accent-green: #3fb950;
-    --accent-orange: #d29922;
-    --accent-red: #f85149;
-    --accent-purple: #bc8cff;
-    --accent-cyan: #39d2c0;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.35);
-    --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
-    --radius: 14px;
-    --radius-sm: 8px;
-    --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  html {
+    color-scheme: dark;
   }
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: var(--font-body);
-    background: var(--bg-primary);
-    color: var(--text-primary);
     min-height: 100vh;
+    background:
+      radial-gradient(circle at top, rgba(88, 166, 255, 0.14), transparent 34%),
+      radial-gradient(circle at 85% 15%, rgba(57, 210, 192, 0.12), transparent 22%),
+      radial-gradient(circle at bottom left, rgba(188, 140, 255, 0.14), transparent 28%),
+      #070b11;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 1.6;
   }
 
-  /* Subtle grid background */
   body::before {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(88,166,255,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(188,140,255,0.04) 0%, transparent 50%);
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+    background-size: 30px 30px;
+    mask-image: radial-gradient(circle at center, black 18%, transparent 80%);
     pointer-events: none;
     z-index: 0;
   }
 
-  .container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 20px 16px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ===== Header ===== */
-  .header {
-    text-align: center;
-    padding: 36px 0 28px;
-  }
-
-  .header-logo {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    margin-bottom: 14px;
-    background: linear-gradient(135deg, rgba(88,166,255,0.15), rgba(188,140,255,0.1));
-    border: 1px solid rgba(88,166,255,0.2);
-    border-radius: 16px;
-  }
-
-  .header-logo svg {
-    width: 32px;
-    height: 32px;
-    fill: var(--text-primary);
-  }
-
-  .header h1 {
-    font-family: var(--font-heading);
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan), var(--accent-purple));
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradientShift 6s ease infinite;
-  }
-
-  @keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  .header .subtitle {
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-top: 6px;
-    font-weight: 400;
-  }
-
-  /* ===== Filter Bar ===== */
-  .filter-section {
-    margin-bottom: 8px;
-  }
-
-  .filter-bar {
-    display: flex;
-    gap: 6px;
-    padding: 6px 0 14px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  .hide-scrollbar {
+    -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .filter-bar::-webkit-scrollbar { display: none; }
 
-  .filter-btn {
-    flex-shrink: 0;
-    padding: 7px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    white-space: nowrap;
-    outline: none;
-  }
-
-  .filter-btn:hover {
-    border-color: var(--border-hover);
-    color: var(--text-primary);
-    background: var(--bg-card);
-  }
-
-  .filter-btn:focus-visible {
-    box-shadow: 0 0 0 2px var(--accent-blue);
-  }
-
-  .filter-btn.active {
-    background: var(--accent-blue);
-    color: #fff;
-    border-color: var(--accent-blue);
-    box-shadow: 0 2px 12px rgba(88,166,255,0.25);
-  }
-
-  .lang-filter-btn {
-    padding: 5px 12px;
-    font-size: 12px;
-  }
-
-  .lang-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 5px;
-    vertical-align: middle;
-  }
-
-  .filter-clear {
-    border-color: rgba(248,81,73,0.3);
-    color: var(--accent-red);
-  }
-  .filter-clear:hover {
-    background: rgba(248,81,73,0.1);
-    border-color: rgba(248,81,73,0.5);
-  }
-
-  /* ===== Stats ===== */
-  .stats-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0 14px;
-    font-size: 13px;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 14px;
-  }
-
-  .stats-bar .count {
-    color: var(--accent-blue);
-    font-weight: 600;
-  }
-
-  .stats-source {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .stats-source svg {
-    width: 14px;
-    height: 14px;
-    fill: var(--text-muted);
-  }
-
-  .desc-lang-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-
-  .desc-lang-toggle:hover {
-    color: var(--text-primary);
-    border-color: var(--border-hover);
-    background: var(--bg-card);
-  }
-
-  /* ===== Repo Card ===== */
-  .repo-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
   .repo-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px;
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    /* staggered entry animation */
     opacity: 0;
-    transform: translateY(12px);
-    animation: cardEnter 0.4s ease forwards;
+    transform: translateY(18px);
+    animation: fade-up 0.5s ease forwards;
   }
 
-  .repo-card:nth-child(1)  { animation-delay: 0.03s; }
-  .repo-card:nth-child(2)  { animation-delay: 0.06s; }
-  .repo-card:nth-child(3)  { animation-delay: 0.09s; }
-  .repo-card:nth-child(4)  { animation-delay: 0.12s; }
-  .repo-card:nth-child(5)  { animation-delay: 0.15s; }
-  .repo-card:nth-child(6)  { animation-delay: 0.18s; }
-  .repo-card:nth-child(7)  { animation-delay: 0.21s; }
-  .repo-card:nth-child(8)  { animation-delay: 0.24s; }
-  .repo-card:nth-child(9)  { animation-delay: 0.27s; }
-  .repo-card:nth-child(10) { animation-delay: 0.30s; }
-  .repo-card:nth-child(n+11) { animation-delay: 0.33s; }
-
-  @keyframes cardEnter {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .repo-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), var(--accent-purple));
-    opacity: 0;
-    transition: opacity 0.25s;
-  }
-
-  .repo-card:hover {
-    background: var(--bg-card-hover);
-    border-color: var(--border-hover);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-  }
-
-  .repo-card:hover::before { opacity: 1; }
-
-  .repo-card:focus-within {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 0 2px rgba(88,166,255,0.2);
-  }
-
-  .repo-top {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
-
-  .repo-rank {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    font-family: var(--font-heading);
-    font-size: 13px;
-    font-weight: 700;
-    background: var(--bg-secondary);
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-  }
-
-  .repo-rank.top {
-    background: linear-gradient(135deg, rgba(88,166,255,0.15), rgba(57,210,192,0.1));
-    color: var(--accent-blue);
-    border-color: rgba(88,166,255,0.25);
-  }
-
-  .repo-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .repo-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .repo-owner {
-    font-size: 13px;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  .repo-name-link {
-    font-family: var(--font-heading);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    text-decoration: none;
-    word-break: break-all;
-    transition: color 0.2s;
-    cursor: pointer;
-  }
-
-  .repo-name-link:hover { color: var(--accent-blue); }
-  .repo-name-link:focus-visible {
-    outline: none;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .today-badge {
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .today-badge svg {
-    width: 12px;
-    height: 12px;
-    fill: currentColor;
-  }
-
-  .today-badge.hot {
-    background: rgba(248,81,73,0.15);
-    color: var(--accent-red);
-    border: 1px solid rgba(248,81,73,0.25);
-  }
-
-  .today-badge.warm {
-    background: rgba(210,153,34,0.15);
-    color: var(--accent-orange);
-    border: 1px solid rgba(210,153,34,0.25);
-  }
-
-  .today-badge.cool {
-    background: rgba(63,185,80,0.12);
-    color: var(--accent-green);
-    border: 1px solid rgba(63,185,80,0.2);
-  }
-
-  .repo-desc {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-    margin-bottom: 12px;
-    margin-top: 6px;
+  .line-clamp-2 {
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     overflow: hidden;
   }
 
-  .repo-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 14px;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  .meta-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .meta-item svg {
-    width: 14px;
-    height: 14px;
-    fill: var(--text-muted);
-    flex-shrink: 0;
-  }
-
-  .lang-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    flex-shrink: 0;
-  }
-
-  .meta-divider {
-    width: 1px;
-    height: 12px;
-    background: var(--border);
-  }
-
-  /* ===== Footer ===== */
-  .footer {
-    text-align: center;
-    padding: 40px 0 28px;
-    color: var(--text-muted);
-    font-size: 12px;
-  }
-
-  .footer-brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    margin-bottom: 4px;
-  }
-
-  .footer-brand svg {
-    width: 16px;
-    height: 16px;
-    fill: var(--text-muted);
-  }
-
-  .footer a {
-    color: var(--accent-blue);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer a:hover { color: var(--accent-cyan); }
-
-  /* ===== Empty State ===== */
-  .empty-state {
-    text-align: center;
-    padding: 72px 20px;
-    color: var(--text-secondary);
-  }
-
-  .empty-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 64px;
-    height: 64px;
-    margin-bottom: 16px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-  }
-
-  .empty-icon svg {
-    width: 28px;
-    height: 28px;
-    fill: var(--text-muted);
-  }
-
-  .empty-state p {
-    font-size: 15px;
-    margin-top: 4px;
-  }
-
-  .empty-state .hint {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 6px;
-  }
-
-  /* ===== Loading ===== */
-  .loading {
-    text-align: center;
-    padding: 40px;
-    color: var(--text-secondary);
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-  }
-
-  .loading span {
-    animation: pulse 1.5s infinite;
-  }
-
-  /* ===== Back to top ===== */
-  .back-to-top {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  #backToTop {
     opacity: 0;
     visibility: hidden;
-    transition: all 0.25s ease;
-    z-index: 50;
-    outline: none;
-    box-shadow: var(--shadow-md);
+    transform: translateY(10px);
   }
 
-  .back-to-top svg {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
-  }
-
-  .back-to-top:hover {
-    background: var(--bg-card-hover);
-    border-color: var(--border-hover);
-    color: var(--text-primary);
-  }
-
-  .back-to-top:focus-visible {
-    box-shadow: 0 0 0 2px var(--accent-blue);
-  }
-
-  .back-to-top.visible {
+  #backToTop.is-visible {
     opacity: 1;
     visibility: visible;
+    transform: translateY(0);
   }
 
-  /* ===== Reduced Motion ===== */
+  @keyframes fade-up {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
       transition-duration: 0.01ms !important;
     }
-    .repo-card {
+
+    .repo-card,
+    #backToTop {
       opacity: 1;
       transform: none;
+      visibility: visible;
     }
-    .header h1 {
-      animation: none;
-    }
-  }
-
-  /* ===== Responsive ===== */
-  @media (max-width: 480px) {
-    .container { padding: 12px; }
-    .header { padding: 28px 0 20px; }
-    .header h1 { font-size: 24px; }
-    .header-logo { width: 48px; height: 48px; border-radius: 14px; }
-    .header-logo svg { width: 28px; height: 28px; }
-    .repo-card { padding: 14px; }
-    .repo-name-link { font-size: 15px; }
-    .filter-btn { padding: 6px 14px; font-size: 12px; }
-    .repo-meta { gap: 10px; }
-    .back-to-top { bottom: 16px; right: 16px; }
-  }
-
-  @media (min-width: 768px) {
-    .container { padding: 28px 24px; }
-    .header { padding: 48px 0 32px; }
-    .header h1 { font-size: 32px; }
-    .repo-card { padding: 20px; }
-    .repo-name-link { font-size: 17px; }
   }
 </style>
 </head>
-<body>
-<div class="container">
+<body class="font-sans text-ink-200">
+<div class="relative z-10 mx-auto min-h-screen w-full max-w-6xl px-4 pb-20 pt-4 sm:px-6 lg:px-8">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="header-logo">
-      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-      </svg>
-    </div>
-    <h1>GitHub Trending</h1>
-    <div class="subtitle">{{ date_str }} &middot; {{ since_label }}</div>
-  </div>
+  <header class="mb-5 sm:mb-7">
+    <div class="overflow-hidden rounded-[28px] border border-white/10 bg-ink-850/80 shadow-glow backdrop-blur">
+      <div class="relative isolate px-4 py-5 sm:px-6 sm:py-7">
+        <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-purple opacity-80"></div>
+        <div class="pointer-events-none absolute -right-16 top-0 h-36 w-36 rounded-full bg-accent-blue/15 blur-3xl"></div>
+        <div class="pointer-events-none absolute bottom-0 left-0 h-28 w-28 rounded-full bg-accent-purple/10 blur-3xl"></div>
 
-  <!-- Time Range Filters -->
-  <div class="filter-section">
-    <div class="filter-bar">
-      {% for s in since_options %}
-      <a href="?since={{ s.value }}{% if language %}&amp;language={{ language }}{% endif %}"
-         class="filter-btn {{ 'active' if s.value == since else '' }}"
-         aria-label="{{ s.label }} 趋势">
-        {{ s.label }}
-      </a>
-      {% endfor %}
+        <div class="flex flex-col gap-5 sm:gap-6">
+          <div class="flex items-start justify-between gap-4">
+            <div class="max-w-3xl">
+              <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-soft sm:h-16 sm:w-16">
+                <svg class="h-8 w-8 fill-ink-200 sm:h-9 sm:w-9" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+              </div>
+              <div class="space-y-2">
+                <div class="inline-flex rounded-full border border-accent-blue/20 bg-accent-blue/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-accent-blue">
+                  Mobile First Trending
+                </div>
+                <h1 class="bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-purple bg-clip-text font-heading text-3xl font-bold tracking-[-0.04em] text-transparent sm:text-4xl">
+                  GitHub Trending
+                </h1>
+                <p class="max-w-2xl text-sm leading-6 text-ink-400 sm:text-base">
+                  把当日热门仓库压缩进更适合手机浏览的单列视图，保持筛选顺手、信息完整、卡片不拥挤。
+                </p>
+              </div>
+            </div>
 
-      {% if language %}
-      <a href="?since={{ since }}" class="filter-btn lang-filter-btn filter-clear">
-        <svg viewBox="0 0 16 16" style="width:12px;height:12px;fill:currentColor;vertical-align:-1px;margin-right:2px"><path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/></svg>
-        {{ language }}
-      </a>
-      {% endif %}
-    </div>
-  </div>
-
-  <!-- Language Filters -->
-  {% if top_languages %}
-  <div class="filter-section">
-    <div class="filter-bar">
-      <a href="?since={{ since }}" class="filter-btn lang-filter-btn {{ 'active' if not language else '' }}">
-        All
-      </a>
-      {% for lang in top_languages %}
-      <a href="?since={{ since }}&amp;language={{ lang.name }}"
-         class="filter-btn lang-filter-btn {{ 'active' if language == lang.name else '' }}">
-        <span class="lang-dot" style="background:{{ lang.color }}"></span>{{ lang.name }}
-      </a>
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-
-  <!-- Stats -->
-  <div class="stats-bar">
-    <span>共 <span class="count">{{ repos|length }}</span> 个仓库</span>
-    <span style="display:flex;align-items:center;gap:10px">
-      <a href="?since={{ since }}{% if language %}&amp;language={{ language }}{% endif %}&amp;desc_lang={{ 'en' if desc_lang == 'zh' else 'zh' }}"
-         class="desc-lang-toggle" title="切换描述语言">
-        <svg viewBox="0 0 16 16" style="width:14px;height:14px;fill:currentColor"><path d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM8 0a8 8 0 100 16A8 8 0 008 0zm4.28 4.28l-3.5 3.5-1.78-1.78-.72.72L8.07 9.5l4.21-4.21-.72-.72z"/></svg>
-        {{ '中文' if desc_lang == 'zh' else 'EN' }}
-      </a>
-      <span class="stats-source">
-        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        github.com/trending
-      </span>
-    </span>
-  </div>
-
-  <!-- Repo List -->
-  {% if repos %}
-  <div class="repo-list">
-  {% for repo in repos %}
-    <div class="repo-card">
-      <div class="repo-top">
-        <div class="repo-rank {{ 'top' if loop.index <= 3 }}">{{ loop.index }}</div>
-        <div class="repo-info">
-          <div class="repo-header">
-            <a class="repo-name-link" href="{{ repo.url }}" target="_blank" rel="noopener">
-              <span class="repo-owner">{{ repo.owner }}/</span>{{ repo.name }}
-            </a>
-            {% if repo.today_stars %}
-            {% set stars_num = repo.today_stars | regex_replace('[^0-9]', '') | int %}
-            <span class="today-badge {{ 'hot' if stars_num >= 500 else 'warm' if stars_num >= 100 else 'cool' }}">
-              <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
-              {{ repo.today_stars }}
-            </span>
-            {% endif %}
+            <div class="hidden rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-right text-xs text-ink-400 sm:block">
+              <div class="font-semibold uppercase tracking-[0.18em] text-ink-300">Snapshot</div>
+              <div class="mt-2 text-sm font-medium text-ink-200">{{ since_label }}</div>
+              <div class="mt-1 whitespace-nowrap">{{ date_str }}</div>
+            </div>
           </div>
 
-          {% if repo.description %}
-          <div class="repo-desc">{{ repo.description }}</div>
-          {% endif %}
-
-          <div class="repo-meta">
-            {% if repo.language %}
-            <span class="meta-item">
-              <span class="lang-dot" style="background:{{ repo.lang_color or '#8b949e' }}"></span>
-              {{ repo.language }}
-            </span>
-            <span class="meta-divider"></span>
-            {% endif %}
-            <span class="meta-item">
-              <svg viewBox="0 0 16 16"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
-              {{ repo.total_stars | format_stars }}
-            </span>
-            <span class="meta-item">
-              <svg viewBox="0 0 16 16"><path d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"/></svg>
-              {{ repo.total_forks | format_stars }}
-            </span>
+          <div class="grid gap-3 sm:grid-cols-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+              <div class="text-[11px] uppercase tracking-[0.2em] text-ink-400">更新周期</div>
+              <div class="mt-1 text-base font-semibold text-ink-200">{{ since_label }}</div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+              <div class="text-[11px] uppercase tracking-[0.2em] text-ink-400">当前筛选</div>
+              <div class="mt-1 truncate text-base font-semibold text-ink-200">{{ language or '全部语言' }}</div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 sm:hidden">
+              <div class="text-[11px] uppercase tracking-[0.2em] text-ink-400">Snapshot</div>
+              <div class="mt-1 text-base font-semibold text-ink-200">{{ date_str }}</div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+              <div class="text-[11px] uppercase tracking-[0.2em] text-ink-400">数据来源</div>
+              <div class="mt-1 text-base font-semibold text-ink-200">github.com/trending</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  {% endfor %}
-  </div>
-  {% else %}
-  <div class="empty-state">
-    <div class="empty-icon">
-      <svg viewBox="0 0 16 16"><path d="M8.833.667a.75.75 0 00-1.666 0V2h-2A1.75 1.75 0 003.417 3.75v8.5c0 .966.784 1.75 1.75 1.75h5.666a1.75 1.75 0 001.75-1.75v-8.5A1.75 1.75 0 0011.833 2h-2V.667zM6.5 7a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0V7zm3.5 0a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0V7z"/></svg>
+  </header>
+
+  <section class="mb-4 space-y-3 sm:mb-5">
+    <div class="rounded-[24px] border border-white/10 bg-ink-850/70 p-3 shadow-soft backdrop-blur">
+      <div class="mb-2 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">时间范围</div>
+      <div class="hide-scrollbar flex gap-2 overflow-x-auto px-1 pb-1">
+        {% for s in since_options %}
+        <a
+          href="?since={{ s.value }}{% if language %}&amp;language={{ language }}{% endif %}&amp;desc_lang={{ desc_lang }}"
+          class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border px-4 py-2 text-sm font-medium transition {% if s.value == since %}border-accent-blue bg-accent-blue text-white shadow-[0_10px_24px_rgba(88,166,255,0.28)]{% else %}border-white/10 bg-white/[0.04] text-ink-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-ink-200{% endif %}"
+          aria-label="{{ s.label }} 趋势"
+        >
+          {{ s.label }}
+        </a>
+        {% endfor %}
+
+        {% if language %}
+        <a
+          href="?since={{ since }}&amp;desc_lang={{ desc_lang }}"
+          class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-accent-red/35 bg-accent-red/10 px-4 py-2 text-sm font-medium text-accent-red transition hover:border-accent-red/55 hover:bg-accent-red/15"
+        >
+          <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/></svg>
+          清除 {{ language }}
+        </a>
+        {% endif %}
+      </div>
     </div>
-    <p>没有获取到数据</p>
-    <p class="hint">请稍后重试，或尝试切换筛选条件</p>
-  </div>
+
+    {% if top_languages %}
+    <div class="rounded-[24px] border border-white/10 bg-ink-850/70 p-3 shadow-soft backdrop-blur">
+      <div class="mb-2 flex items-center justify-between gap-3 px-1">
+        <div class="text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">热门语言</div>
+        <div class="text-[11px] text-ink-400">横向滑动查看更多</div>
+      </div>
+      <div class="hide-scrollbar flex gap-2 overflow-x-auto px-1 pb-1">
+        <a
+          href="?since={{ since }}&amp;desc_lang={{ desc_lang }}"
+          class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full border px-3.5 py-2 text-sm font-medium transition {% if not language %}border-accent-blue bg-accent-blue text-white shadow-[0_10px_24px_rgba(88,166,255,0.28)]{% else %}border-white/10 bg-white/[0.04] text-ink-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-ink-200{% endif %}"
+        >
+          All
+        </a>
+        {% for lang in top_languages %}
+        <a
+          href="?since={{ since }}&amp;language={{ lang.name }}&amp;desc_lang={{ desc_lang }}"
+          class="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition {% if language == lang.name %}border-accent-blue bg-accent-blue text-white shadow-[0_10px_24px_rgba(88,166,255,0.28)]{% else %}border-white/10 bg-white/[0.04] text-ink-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-ink-200{% endif %}"
+        >
+          <span class="h-2.5 w-2.5 rounded-full" style="background:{{ lang.color }}"></span>
+          {{ lang.name }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="mb-5 grid gap-3 sm:grid-cols-3">
+    <div class="rounded-[24px] border border-white/10 bg-ink-850/70 p-4 shadow-soft backdrop-blur">
+      <div class="text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">仓库数量</div>
+      <div class="mt-2 text-2xl font-bold text-accent-blue">{{ repos|length }}</div>
+      <p class="mt-1 text-sm text-ink-400">当前筛选条件下的热门项目总数</p>
+    </div>
+
+    <div class="rounded-[24px] border border-white/10 bg-ink-850/70 p-4 shadow-soft backdrop-blur">
+      <div class="text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">描述语言</div>
+      <div class="mt-2 flex items-center justify-between gap-3">
+        <div>
+          <div class="text-base font-semibold text-ink-200">{{ '中文' if desc_lang == 'zh' else 'English' }}</div>
+          <p class="mt-1 text-sm text-ink-400">一键切换说明文案语言</p>
+        </div>
+        <a
+          href="?since={{ since }}{% if language %}&amp;language={{ language }}{% endif %}&amp;desc_lang={{ 'en' if desc_lang == 'zh' else 'zh' }}"
+          class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-ink-200 transition hover:border-white/20 hover:bg-white/[0.1]"
+          title="切换描述语言"
+        >
+          {{ '切换 EN' if desc_lang == 'zh' else '切换中文' }}
+        </a>
+      </div>
+    </div>
+
+    <div class="rounded-[24px] border border-white/10 bg-ink-850/70 p-4 shadow-soft backdrop-blur">
+      <div class="text-xs font-semibold uppercase tracking-[0.18em] text-ink-400">浏览体验</div>
+      <div class="mt-2 text-base font-semibold text-ink-200">更适合单手滑动</div>
+      <p class="mt-1 text-sm text-ink-400">卡片更紧凑，按钮更大，移动端横向过滤更顺手。</p>
+    </div>
+  </section>
+
+  {% if repos %}
+  <section class="space-y-4">
+    {% for repo in repos %}
+    {% set stars_num = repo.today_stars | regex_replace('[^0-9]', '') | int if repo.today_stars else 0 %}
+    <article
+      class="repo-card group overflow-hidden rounded-[28px] border border-white/10 bg-ink-800/85 p-4 shadow-soft transition duration-300 hover:border-white/20 hover:bg-ink-780/90 hover:shadow-glow sm:p-5"
+      style="animation-delay: {{ '%.2f'|format(loop.index0 * 0.05 + 0.03) }}s"
+    >
+      <div class="mb-4 flex items-start justify-between gap-3">
+        <div class="flex min-w-0 items-start gap-3">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border text-sm font-bold shadow-soft {% if loop.index <= 3 %}border-accent-blue/30 bg-accent-blue/12 text-accent-blue{% else %}border-white/10 bg-white/[0.04] text-ink-400{% endif %}">
+            {{ loop.index }}
+          </div>
+          <div class="min-w-0">
+            <div class="mb-1 text-xs font-medium uppercase tracking-[0.18em] text-ink-400">
+              {{ repo.owner }}
+            </div>
+            <a
+              class="block break-all font-heading text-lg font-semibold leading-6 text-ink-200 transition group-hover:text-accent-blue"
+              href="{{ repo.url }}"
+              target="_blank"
+              rel="noopener"
+            >
+              {{ repo.owner }}/{{ repo.name }}
+            </a>
+          </div>
+        </div>
+
+        {% if repo.today_stars %}
+        <div class="shrink-0">
+          <span class="inline-flex min-h-9 items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold {% if stars_num >= 500 %}border-accent-red/30 bg-accent-red/12 text-accent-red{% elif stars_num >= 100 %}border-accent-orange/30 bg-accent-orange/12 text-accent-orange{% else %}border-accent-green/30 bg-accent-green/10 text-accent-green{% endif %}">
+            <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+            {{ repo.today_stars }}
+          </span>
+        </div>
+        {% endif %}
+      </div>
+
+      {% if repo.description %}
+      <p class="line-clamp-2 text-sm leading-6 text-ink-300 sm:text-[15px]">
+        {{ repo.description }}
+      </p>
+      {% endif %}
+
+      <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink-400">
+        {% if repo.language %}
+        <div class="inline-flex items-center gap-2">
+          <span class="h-2.5 w-2.5 rounded-full" style="background:{{ repo.lang_color or '#8b949e' }}"></span>
+          <span>{{ repo.language }}</span>
+        </div>
+        {% endif %}
+
+        <div class="inline-flex items-center gap-2">
+          <svg class="h-4 w-4 fill-current" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+          <span>{{ repo.total_stars | format_stars }}</span>
+        </div>
+
+        <div class="inline-flex items-center gap-2">
+          <svg class="h-4 w-4 fill-current" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"/></svg>
+          <span>{{ repo.total_forks | format_stars }}</span>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+  {% else %}
+  <section class="rounded-[28px] border border-dashed border-white/10 bg-ink-850/70 px-6 py-14 text-center shadow-soft backdrop-blur">
+    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04]">
+      <svg class="h-7 w-7 fill-ink-400" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8.833.667a.75.75 0 00-1.666 0V2h-2A1.75 1.75 0 003.417 3.75v8.5c0 .966.784 1.75 1.75 1.75h5.666a1.75 1.75 0 001.75-1.75v-8.5A1.75 1.75 0 0011.833 2h-2V.667zM6.5 7a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0V7zm3.5 0a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0V7z"/></svg>
+    </div>
+    <h2 class="mt-5 font-heading text-2xl font-semibold text-ink-200">没有获取到数据</h2>
+    <p class="mt-3 text-sm leading-6 text-ink-400">请稍后重试，或调整时间范围和语言筛选。</p>
+  </section>
   {% endif %}
 
-  <!-- Footer -->
-  <div class="footer">
-    <div class="footer-brand">
-      <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      GitHub Trending Daily &middot; Powered by Python
+  <footer class="mt-10 pb-4 text-center text-sm text-ink-400">
+    <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-ink-850/70 px-4 py-2 shadow-soft backdrop-blur">
+      <svg class="h-4 w-4 fill-current" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>GitHub Trending Daily · Powered by Python</span>
     </div>
-  </div>
+  </footer>
 
 </div>
 
-<!-- Back to top -->
-<button class="back-to-top" id="backToTop" aria-label="回到顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-  <svg viewBox="0 0 16 16"><path d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"/></svg>
+<button
+  id="backToTop"
+  class="fixed bottom-5 right-5 z-30 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-ink-800/90 text-ink-200 shadow-glow backdrop-blur transition duration-300 hover:border-white/20 hover:bg-ink-780/90 sm:bottom-6 sm:right-6"
+  aria-label="回到顶部"
+  onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+>
+  <svg class="h-5 w-5 fill-current" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8.53 3.22a.75.75 0 00-1.06 0L3.22 7.47a.75.75 0 101.06 1.06L7.25 5.56v7.69a.75.75 0 001.5 0V5.56l2.97 2.97a.75.75 0 101.06-1.06L8.53 3.22z"/></svg>
 </button>
 
 <script>
-  // Back to top visibility
   const btn = document.getElementById('backToTop');
   if (btn) {
-    window.addEventListener('scroll', function() {
-      btn.classList.toggle('visible', window.scrollY > 400);
+    window.addEventListener('scroll', function () {
+      btn.classList.toggle('is-visible', window.scrollY > 320);
     }, { passive: true });
   }
 </script>

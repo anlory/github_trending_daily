@@ -177,6 +177,8 @@ def screenshot(
     width: int = 760,
 ):
     """生成页面截图为 PNG 文件。"""
+    from playwright.sync_api import Error as PlaywrightError
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
     from playwright.sync_api import sync_playwright
 
     # 先导出静态 HTML
@@ -189,15 +191,46 @@ def screenshot(
     png_name = os.path.splitext(os.path.basename(html_path))[0] + ".png"
     png_path = os.path.join(output_dir, png_name)
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page(
-            viewport={"width": width, "height": 800},
-            device_scale_factor=2,
-        )
-        page.goto(Path(html_path).absolute().as_uri(), wait_until="networkidle")
-        page.screenshot(path=png_path, full_page=full_page)
-        browser.close()
+    page_uri = Path(html_path).absolute().as_uri()
+
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(
+                headless=True,
+                args=[
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--disable-gpu",
+                ],
+            )
+            page = browser.new_page(
+                viewport={"width": width, "height": 800},
+                device_scale_factor=2,
+            )
+            page.goto(page_uri, wait_until="domcontentloaded")
+            try:
+                page.wait_for_load_state("networkidle", timeout=10000)
+            except PlaywrightTimeoutError:
+                # Tailwind CDN 或字体资源较慢时，仍允许继续截图。
+                pass
+            # 给 Tailwind Play CDN 和 Web Fonts 留一点布局稳定时间。
+            page.wait_for_timeout(1200)
+            page.screenshot(path=png_path, full_page=full_page)
+            browser.close()
+    except PlaywrightError as exc:
+        message = str(exc)
+        if "Executable doesn't exist" in message:
+            raise RuntimeError(
+                "Playwright 浏览器未安装。请先运行 `.venv/bin/playwright install chromium`，"
+                "然后再执行截图命令。"
+            ) from exc
+        if "error while loading shared libraries" in message or "libnspr4.so" in message:
+            raise RuntimeError(
+                "Playwright Chromium 启动失败，系统缺少浏览器依赖库。"
+                "请先运行 `sudo .venv/bin/playwright install-deps chromium`，"
+                "或至少安装 `libnspr4` / `libnss3` 等依赖后再重试。"
+            ) from exc
+        raise RuntimeError(f"截图失败，Playwright 无法启动 Chromium: {message}") from exc
 
     print(f"已生成截图: {png_path}")
     return png_path

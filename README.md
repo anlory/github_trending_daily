@@ -1,11 +1,11 @@
 # GitHub Trending Daily
 
-A mobile-friendly GitHub Trending viewer, built with Python + Flask.
+A mobile-friendly GitHub Trending viewer, built with Python + Flask + Tailwind CSS.
 
 ## Features
 
 - Scrape GitHub Trending repositories (name, description, language, stars, forks, today's gain)
-- Dark theme card-style layout, mobile-first responsive design
+- Dark theme card-style layout, rebuilt with Tailwind CSS and mobile-first responsive design
 - Daily / Weekly / Monthly time range switching
 - Language filter (auto-extracts trending languages)
 - Today's star gain badges (fire-graded: >=500 orange-red, >=100 gold, <100 green)
@@ -16,6 +16,9 @@ A mobile-friendly GitHub Trending viewer, built with Python + Flask.
 ```bash
 # Install dependencies (managed by uv)
 uv sync
+
+# If you want to generate screenshots with Playwright
+.venv/bin/playwright install chromium
 ```
 
 ## Usage
@@ -37,6 +40,12 @@ uv run python app.py export -l python -s monthly   # Python monthly
 uv run python app.py export -o ./dist              # custom output dir
 ```
 
+If screenshot generation fails on Linux because Chromium is missing system libraries, run:
+
+```bash
+sudo .venv/bin/playwright install-deps chromium
+```
+
 ## Project Structure
 
 ```
@@ -44,7 +53,7 @@ uv run python app.py export -o ./dist              # custom output dir
 ├── app.py                  # Entry point (Flask + CLI)
 ├── github_trending.py      # Scraper module
 ├── templates/
-│   └── trending.html       # Mobile-first template
+│   └── trending.html       # Tailwind CSS mobile-first template
 └── output/                 # Generated static HTML
 ```
 
